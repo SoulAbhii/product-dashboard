@@ -1,0 +1,122 @@
+<div class="top-bar">
+  <h2 class="title">Product</h2>
+  <div class="actions">
+    <button class="btn settings"><span class="material-icons">refresh</span>&nbsp;&nbsp;</button>
+    <button class="btn settings"><span class="material-icons">settings</span>&nbsp;&nbsp;Settings</button>
+    <button class="btn add">+ &nbsp;&nbsp; Add New</button>
+    <button class="btn bulk"><span class="material-icons">file_download</span>&nbsp;&nbsp; Bulk</button>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Filters -->
+  <div class="filters">
+     <div class="search-group">
+       <span class="material-icons">search</span>
+       <input type="text" placeholder="Search products..." [(ngModel)]="searchText" />
+     </div>
+
+    <select [(ngModel)]="selectedCategory">
+      <option value="" disabled selected>Category</option>
+      <option>Flower</option>
+      <option>Gift Card</option>
+      <option>Edibles</option>
+      <option>Vape</option>
+    </select>
+
+    <select [(ngModel)]="selectedVariant">
+      <option value="" disabled selected>Variant Type</option>
+      <option>Standalone</option>
+      <option>Grouped</option>
+    </select>
+
+    <select [(ngModel)]="selectedStatus">
+      <option value="" disabled selected>Status</option>
+      <option>Active</option>
+      <option>Inactive</option>
+    </select>
+
+    <select [(ngModel)]="selectedVendor">
+      <option value="" disabled selected>Vendor</option>
+      <option>VendorX</option>
+      <option>VendorY</option>
+      <option>VendorZ</option>
+    </select>
+
+    <select [(ngModel)]="selectedBrand">
+      <option value="" disabled selected>Brand</option>
+      <option>GreenGrow</option>
+      <option>PromoCo</option>
+    </select>
+    <div class="toggle-container">
+        <label class="switch">
+            <input type="checkbox" [(ngModel)]="toggleValue" />
+            <span class="slider round"></span>
+        </label>
+        <span class="toggle-label"></span>
+    </div>
+  </div>
+
+  <!-- Product Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Variant Type</th>
+        <th>Category</th>
+        <th>Sub Category</th>
+        <th>Strain</th>
+        <th>Brand</th>
+        <th>Vendor</th>
+        <th>Dispensary</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>
+          {{ product.name }}
+          <span class="material-icons" [ngClass]="product.iconClass">{{ product.icon }}</span>
+        </td>
+        <td>
+          <span class="variant-badge" [ngClass]="{
+            'standalone': product.variant === 'Standalone',
+            'grouped': product.variant === 'Grouped',
+            'variant': product.variant === 'Variant'
+          }">{{ product.variant }}</span>
+        </td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.subCategory }}</td>
+        <td>{{ product.strain }}</td>
+        <td>{{ product.brand }}</td>
+        <td>{{ product.vendor }}</td>
+        <td>{{ product.store }}</td>
+        <td class="table-actions">
+          <span class="material-icons">visibility</span>
+          <span class="material-icons">edit</span>
+          <span class="material-icons red">delete</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-footer">
+  <div class="pagination-control">
+    <span>Rows per page:</span>
+    <select [(ngModel)]="rowsPerPage" (change)="onRowsChange()">
+      <option *ngFor="let size of [5, 10, 25, 50, 100]" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+
+  <div class="pagination-info">
+    <span>{{ getStartIndex() + 1 }}–{{ getEndIndex() }} of {{ filteredProducts.length }}</span>
+
+    <button [disabled]="currentPage === 0" (click)="prevPage()">
+      <span class="material-icons">chevron_left</span>
+    </button>
+    <button [disabled]="getEndIndex() >= filteredProducts.length" (click)="nextPage()">
+      <span class="material-icons">chevron_right</span>
+    </button>
+  </div>
+</div>
+
+</div>
