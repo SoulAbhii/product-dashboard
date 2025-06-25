@@ -1,6 +1,6 @@
 
 export default {
-  basePath: 'https://soulabhii.github.io/product-dashboard',
+  basePath: '/product-dashboard',
   supportedLocales: {
   "en-US": ""
 },
